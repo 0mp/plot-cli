@@ -174,9 +174,12 @@ def _plot(
         ax.set_ylabel(y_label)
     if show_grid:
         ax.grid()
+  
+    handles, labels = ax.get_legend_handles_labels()
+    lgd = ax.legend(handles, labels, loc='upper center', bbox_to_anchor=(0.5,-0.1))
 
     if out_file:
-        fig.savefig(out_file)
+        fig.savefig(out_file, bbox_extra_artists=(lgd,), bbox_inches='tight')
     else:
         plt.show()
 
