@@ -185,11 +185,12 @@ def _plot(
 
 
 def _get_file_hander(in_file: Optional[str]) -> IO[str]:
-    stdin_text = click.get_text_stream("stdin")
-    if not stdin_text.isatty():
-        buffer = stdin_text
-    else:
-        if in_file is None:
-            raise click.UsageError('If you do not use pipes, "-i" option is required.')
+    if in_file is not None:
         buffer = open(in_file)
+    else:
+        stdin_text = click.get_text_stream("stdin")
+        if not stdin_text.isatty():
+            buffer = stdin_text
+        else:
+            raise click.UsageError('If you do not use pipes, "-i" option is required.')
     return buffer
